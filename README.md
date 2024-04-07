@@ -18,7 +18,9 @@ Queuing are the most frequently encountered problems in everyday life. For examp
 
 
 ## Experiment:
-![image](https://github.com/Lokhnath10/Muttiple-capacity-with-infinite-capacity/assets/138969918/02041d62-90f8-47b6-a4bb-74fd7c8ba237)
+![image](https://github.com/Lokhnath10/Muttiple-capacity-with-infinite-capacity/assets/138969918/59e57969-9c1d-4ecf-bca4-cabc4238e2fe)
+![image](https://github.com/Lokhnath10/Muttiple-capacity-with-infinite-capacity/assets/138969918/d57108c2-645f-4987-99a2-f33ae93afb82)
+
 
 
 ## Program
@@ -26,35 +28,44 @@ Queuing are the most frequently encountered problems in everyday life. For examp
 Name: LOKHNATH J
 Reference Number: 212223240079
 
+import math
 arr_time=float(input("Enter the mean inter arrival time of objects from Feeder (in secs): "))
 ser_time=float(input("Enter the mean  inter service time of Lathe Machine (in secs) :  "))
 Robot_time=float(input("Enter the Additional time taken for the Robot (in secs) :  "))
+c=int(input("Number of service centre :  "))
 lam=1/arr_time
 mu=1/(ser_time+Robot_time)
 print("--------------------------------------------------------------")
-print("Single Server with Infinite Capacity - (M/M/1):(oo/FIFO)")
+print("Multiple Server with Infinite Capacity - (M/M/c):(oo/FIFO)")
 print("--------------------------------------------------------------")
 print("The mean arrival rate per second : %0.2f "%lam)
 print("The mean service rate per second : %0.2f "%mu)
-if (lam <  mu):
-    Ls=lam/(mu-lam)
-    Lq=Ls-lam/mu
+rho=lam/(c*mu)
+sum=(lam/mu)**c*(1/(1-rho))/math.factorial(c)
+for i in range(0,c):
+    sum=sum+(lam/mu)**i/math.factorial(i)
+P0=1/sum
+if (rho<1):
+    Lq=(P0/math.factorial(c))*(1/c)*(lam/mu)**(c+1)/(1-rho)**2
+    Ls=Lq+lam/mu
     Ws=Ls/lam
     Wq=Lq/lam
     print("Average number of objects in the system : %0.2f "%Ls)
     print("Average number of objects in the conveyor :  %0.2f "%Lq)
     print("Average waiting time of an object in the system : %0.2f secs"%Ws)
     print("Average waiting time of an object in the conveyor : %0.2f secs"%Wq)
-    print("Probability that the system is busy : %0.2f "%(lam/mu) )
-    print("Probability that the system is empty : %0.2f "%(1-lam/mu) )
+    print("Probability that the system is busy : %0.2f "%(rho))
+    print("Probability that the system is empty : %0.2f "%(1-rho))
 else:
     print("Warning! Objects Over flow will happen in the conveyor")
-print("---------------------------------------------------------------")
+print("--------------------------------------------------------------")
+
 ```
 
 
 ## Output :
-![image](https://github.com/Lokhnath10/Muttiple-capacity-with-infinite-capacity/assets/138969918/bebca1c8-1f1d-4cfc-a512-126456fa63e1)
+![image](https://github.com/Lokhnath10/Muttiple-capacity-with-infinite-capacity/assets/138969918/428073b2-a4fd-405c-b7d1-d58fec365da3)
+
 ## Result : 
-The average number of material in the sysytem and in the conveyor and waiting time are successfully found.
+Thus the average number of materials in the system and conveyor, waiting time of each material in the system and conveyor is found successfully.
 
